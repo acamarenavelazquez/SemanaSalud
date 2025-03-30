@@ -168,18 +168,18 @@
     const container = document.getElementById('carouselContainer');
     container.innerHTML = ''; // Limpiar antes de renderizar
 
-const formattedDate = formatDate(item.Fecha);
+const formattedDate = formatDate(item.fecha);
 const card = `
   <div class="card">
-    <img src="${item.Bytes}" alt="${item['Nombre del Curso']}">
+    <img src="${item.imagen}" alt="${item.titulo}">
     <div class="card-content">
-      <h3>${item['Nombre del Curso']}</h3>
-      <p><strong>Ponente:</strong> ${item.Ponente}</p>
-      <p><strong>Modalidad:</strong> ${item.Modalidad}</p>
+      <h3>${item.titulo}</h3>
+      <p><strong>Ponente:</strong> ${item.ponente}</p>
+      <p><strong>Modalidad:</strong> ${item.modalidad}</p>
       <p><strong>Fecha:</strong> ${formattedDate}</p>
-      <p><strong>Hora:</strong> ${item.Horario}</p>
-      <p>${item.Descripción}</p>
-      <button onclick="window.open('${item.Formulario}', '_blank')">Inscríbete Aquí</button>
+      <p><strong>Hora:</strong> ${item.hora}</p>
+      <p>${item.descripcion}</p>
+      <button onclick="window.open('${item.formulario}', '_blank')">Inscríbete Aquí</button>
     </div>
   </div>
 `;
