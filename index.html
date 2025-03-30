@@ -165,30 +165,31 @@
   }
 
   function renderCards(data) {
-    const container = document.getElementById('carouselContainer');
-    container.innerHTML = ''; // Limpiar antes de renderizar
+  const container = document.getElementById('carouselContainer');
+  container.innerHTML = ''; // Limpiar antes de renderizar
 
-const formattedDate = formatDate(item.fecha);
-const card = `
-  <div class="card">
-    <img src="${item.imagen}" alt="${item.titulo}">
-    <div class="card-content">
-      <h3>${item.titulo}</h3>
-      <p><strong>Ponente:</strong> ${item.ponente}</p>
-      <p><strong>Modalidad:</strong> ${item.modalidad}</p>
-      <p><strong>Fecha:</strong> ${formattedDate}</p>
-      <p><strong>Hora:</strong> ${item.hora}</p>
-      <p>${item.descripcion}</p>
-      <button onclick="window.open('${item.formulario}', '_blank')">Inscríbete Aquí</button>
-    </div>
-  </div>
-`;
+  data.forEach(item => {
+    const formattedDate = formatDate(item.fecha);
+    const card = `
+      <div class="card">
+        <img src="${item.imagen}" alt="${item.titulo}">
+        <div class="card-content">
+          <h3>${item.titulo}</h3>
+          <p><strong>Ponente:</strong> ${item.ponente}</p>
+          <p><strong>Modalidad:</strong> ${item.modalidad}</p>
+          <p><strong>Fecha:</strong> ${formattedDate}</p>
+          <p><strong>Hora:</strong> ${item.hora}</p>
+          <p>${item.descripcion}</p>
+          <button onclick="window.open('${item.formulario}', '_blank')">Inscríbete Aquí</button>
+        </div>
+      </div>
+    `;
+    container.innerHTML += card;
+  });
 
-      container.innerHTML += card;
-    });
+  initializeCarousel();
+}
 
-    initializeCarousel();
-  }
 
   function initializeCarousel() {
     $('#carouselContainer').slick({
