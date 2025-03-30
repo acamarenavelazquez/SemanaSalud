@@ -168,22 +168,22 @@
     const container = document.getElementById('carouselContainer');
     container.innerHTML = ''; // Limpiar antes de renderizar
 
-    data.forEach(item => {
-      const formattedDate = formatDate(item.Fecha);
-      const card = `
-        <div class="card">
-          <img src="${item.Bytes}" alt="${item['Nombre del Curso']}">
-          <div class="card-content">
-            <h3>${item['Nombre del Curso']}</h3>
-            <p><strong>Ponente:</strong> ${item.Ponente}</p>
-            <p><strong>Modalidad:</strong> ${item.Modalidad}</p>
-            <p><strong>Fecha:</strong> ${formattedDate}</p>
-            <p><strong>Hora:</strong> ${item.Horario}</p>
-            <p>${item.Descripción}</p>
-            <button onclick="window.open('${item.Formulario}', '_blank')">Inscríbete Aquí</button>
-          </div>
-        </div>
-      `;
+const formattedDate = formatDate(item.Fecha);
+const card = `
+  <div class="card">
+    <img src="${item.Bytes}" alt="${item['Nombre del Curso']}">
+    <div class="card-content">
+      <h3>${item['Nombre del Curso']}</h3>
+      <p><strong>Ponente:</strong> ${item.Ponente}</p>
+      <p><strong>Modalidad:</strong> ${item.Modalidad}</p>
+      <p><strong>Fecha:</strong> ${formattedDate}</p>
+      <p><strong>Hora:</strong> ${item.Horario}</p>
+      <p>${item.Descripción}</p>
+      <button onclick="window.open('${item.Formulario}', '_blank')">Inscríbete Aquí</button>
+    </div>
+  </div>
+`;
+
       container.innerHTML += card;
     });
 
