@@ -6,8 +6,8 @@
   <title>Semana del Bienestar</title>
 
   <!-- Slick Carousel CSS -->
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
 
   <style>
     body {
@@ -102,31 +102,68 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 
   <script>
-    async function loadCards() {
-      try {
-        const response = await fetch('https://acamarenavelazquez.github.io/SemanaSalud/data.json');
-        const data = await response.json();
-        renderCards(data);
-      } catch (error) {
-        console.error('Error al cargar el JSON:', error);
+    const cursos = [
+      {
+        titulo: "La neurociencia de la Salud Mental: Gratitud y bienestar",
+        ponente: "Dr. Eduardo López",
+        modalidad: "Virtual",
+        fecha: "2025-04-07",
+        hora: "17:00 a 18:00",
+        descripcion: "¿Sabes cuáles son los beneficios de la gratitud en la Salud Mental? Te invitamos a descubrirlos en este foro con el Dr. Rafael López, especialista en psiquiatría y divulgador en salud mental.",
+        imagen: "https://raw.githubusercontent.com/acamarenavelazquez/WORK/main/Dr.%20Rafa%20Lopez%20(1).jpg",
+        formulario: "https://docs.google.com/forms/d/e/1FAIpQLSekg9vSEk7iLsl4o9ctW19rJA5mCu81mDdttot5FObeEzqRuw/viewform?usp=pp_url&entry.1265402215=SS-1"
+      },
+      {
+        titulo: "Dinero inteligente",
+        ponente: "Marisa González Álvarez de Educación financiera BBVA",
+        modalidad: "Virtual",
+        fecha: "2025-04-08",
+        hora: "17:00 a 18:00",
+        descripcion: "A través de esta conversación, te brindaremos herramientas prácticas de educación financiera para mejorar la gestión de tu dinero.",
+        imagen: "https://raw.githubusercontent.com/acamarenavelazquez/WORK/main/Beneficios%202.PNG",
+        formulario: "https://docs.google.com/forms/d/e/1FAIpQLSekg9vSEk7iLsl4o9ctW19rJA5mCu81mDdttot5FObeEzqRuw/viewform?usp=pp_url&entry.1265402215=SS-2"
+      },
+      {
+        titulo: "Importancia del equilibrio vida-trabajo en el bienestar",
+        ponente: "Dra. Shulamit Graber",
+        modalidad: "Híbrido",
+        fecha: "2025-04-09",
+        hora: "17:00 a 18:00",
+        descripcion: "Conversación con Shulamit Graber sobre cómo el equilibrio entre el trabajo y la vida personal es esencial para cuidar nuestra salud mental y emocional.",
+        imagen: "https://raw.githubusercontent.com/acamarenavelazquez/WORK/main/Shulamit%20Graber%20V2.png",
+        formulario: "https://docs.google.com/forms/d/e/1FAIpQLSdAi7iAujWa9pmzq80QvkMEfR8lPLfGRkFV3UshMNNh5Joedg/viewform?usp=pp_url&entry.1265402215=SS-3"
+      },
+      {
+        titulo: "La curiosidad como motor del bienestar",
+        ponente: "Teresa Viejo",
+        modalidad: "Virtual",
+        fecha: "2025-04-10",
+        hora: "17:00 a 18:00",
+        descripcion: "Exploraremos cómo la curiosidad puede ser un mecanismo clave para alcanzar altos niveles de bienestar.",
+        imagen: "https://raw.githubusercontent.com/acamarenavelazquez/WORK/main/Teresa%20Viejo%20V2.png",
+        formulario: "https://docs.google.com/forms/d/e/1FAIpQLSekg9vSEk7iLsl4o9ctW19rJA5mCu81mDdttot5FObeEzqRuw/viewform?usp=pp_url&entry.1265402215=SS-4"
+      },
+      {
+        titulo: "Trabajar con eficiencia, vivir con bienestar",
+        ponente: "Tania Pimentel",
+        modalidad: "Híbrido",
+        fecha: "2025-04-10",
+        hora: "18:00 a 19:00",
+        descripcion: "Tania Pimentel compartirá técnicas de trabajo eficiente que pueden ayudarnos a impulsar nuestro bienestar.",
+        imagen: "https://raw.githubusercontent.com/acamarenavelazquez/WORK/main/Tania%20Pimentel_V2%20(2).png",
+        formulario: "https://docs.google.com/forms/d/e/1FAIpQLSdAi7iAujWa9pmzq80QvkMEfR8lPLfGRkFV3UshMNNh5Joedg/viewform?usp=pp_url&entry.1265402215=SS-5"
       }
-    }
+    ];
 
-    function formatDate(dateString) {
-      const date = new Date(dateString);
-      const day = date.getDate().toString().padStart(2, '0');
-      const month = (date.getMonth() + 1).toString().padStart(2, '0');
-      const year = date.getFullYear();
-      return `${day}/${month}/${year}`;
+    function formatDate(fechaStr) {
+      const date = new Date(fechaStr);
+      return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth()+1).toString().padStart(2,'0')}/${date.getFullYear()}`;
     }
 
     function renderCards(data) {
       const container = document.getElementById('carouselContainer');
       container.innerHTML = '';
-
       data.forEach(item => {
-        const fechaFormateada = formatDate(item.fecha); // 👈 AQUI ESTABA EL PROBLEMA
-
         const card = `
           <div class="card">
             <img src="${item.imagen}" alt="${item.titulo}">
@@ -134,7 +171,7 @@
               <h3>${item.titulo}</h3>
               <p><strong>Ponente:</strong> ${item.ponente}</p>
               <p><strong>Modalidad:</strong> ${item.modalidad}</p>
-              <p><strong>Fecha:</strong> ${fechaFormateada}</p>
+              <p><strong>Fecha:</strong> ${formatDate(item.fecha)}</p>
               <p><strong>Hora:</strong> ${item.hora}</p>
               <p>${item.descripcion}</p>
               <button onclick="window.open('${item.formulario}', '_blank')">Inscríbete Aquí</button>
@@ -149,28 +186,24 @@
           slidesToShow: 3,
           slidesToScroll: 1,
           autoplay: true,
-          autoplaySpeed: 4000,
+          autoplaySpeed: 3500,
           dots: true,
           arrows: true,
           responsive: [
             {
               breakpoint: 992,
-              settings: {
-                slidesToShow: 2
-              }
+              settings: { slidesToShow: 2 }
             },
             {
               breakpoint: 768,
-              settings: {
-                slidesToShow: 1
-              }
+              settings: { slidesToShow: 1 }
             }
           ]
         });
-      }, 800);
+      }, 500);
     }
 
-    document.addEventListener('DOMContentLoaded', loadCards);
+    document.addEventListener('DOMContentLoaded', () => renderCards(cursos));
   </script>
 </body>
 </html>
