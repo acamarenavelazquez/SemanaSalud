@@ -141,65 +141,73 @@
   <!-- Slick Carousel JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 
-  <script>
-    function formatDate(fecha) {
-      const date = new Date(fecha);
-      return date.toLocaleDateString('es-MX', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
-      });
+<script>
+  async function loadCards() {
+    try {
+      const response = await fetch('data.json');
+      const parsedData = await response.json();
+      renderCards(parsedData);
+    } catch (error) {
+      console.error('Error al cargar el JSON:', error);
     }
+  }
 
-    function openInNewTab(url) {
-      window.open(url, '_blank');
+  function formatDate(dateString) {
+    try {
+      const date = new Date(dateString);
+      const day = date.getDate().toString().padStart(2, '0');
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    } catch (error) {
+      return dateString;
     }
+  }
 
-    function initializeCarousel() {
-      $('#carouselContainer').slick({
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 3500,
-        speed: 800,
-        dots: true,
-        arrows: true,
-        centerMode: true,
-        centerPadding: '40px',
-        adaptiveHeight: false,
-        infinite: true
-      });
-    }
+  function renderCards(data) {
+    const container = document.getElementById('carouselContainer');
+    container.innerHTML = ''; // Limpiar antes de renderizar
 
-    async function loadCards() {
-      const res = await fetch("data.json");
-      const data = await res.json();
-      const container = $('#carouselContainer');
-
-      data.forEach(item => {
-        const formattedDate = formatDate(item.Fecha);
-        const card = `
-          <div class="card">
-            <img src="${item.Bytes}" alt="${item['Nombre del Curso']}">
-            <div class="card-content">
-              <h3>${item['Nombre del Curso']}</h3>
-              <p><strong>Ponente:</strong> ${item.Ponente}</p>
-              <p><strong>Modalidad:</strong> ${item.Modalidad}</p>
-              <p><strong>Fecha:</strong> ${formattedDate}</p>
-              <p><strong>Hora:</strong> ${item.Horario}</p>
-              <p>${item.Descripción}</p>
-              <button onclick="openInNewTab('${item.Formulario}')">Inscríbete Aquí</button>
-            </div>
+    data.forEach(item => {
+      const formattedDate = formatDate(item.Fecha);
+      const card = `
+        <div class="card">
+          <img src="${item.Bytes}" alt="${item['Nombre del Curso']}">
+          <div class="card-content">
+            <h3>${item['Nombre del Curso']}</h3>
+            <p><strong>Ponente:</strong> ${item.Ponente}</p>
+            <p><strong>Modalidad:</strong> ${item.Modalidad}</p>
+            <p><strong>Fecha:</strong> ${formattedDate}</p>
+            <p><strong>Hora:</strong> ${item.Horario}</p>
+            <p>${item.Descripción}</p>
+            <button onclick="window.open('${item.Formulario}', '_blank')">Inscríbete Aquí</button>
           </div>
-        `;
-        container.append(card);
-      });
+        </div>
+      `;
+      container.innerHTML += card;
+    });
 
-      initializeCarousel();
-    }
+    initializeCarousel();
+  }
 
-    $(document).ready(() => loadCards());
-  </script>
+  function initializeCarousel() {
+    $('#carouselContainer').slick({
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 3000,
+      speed: 800,
+      dots: true,
+      arrows: true,
+      centerMode: true,
+      centerPadding: '40px',
+      infinite: true
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', loadCards);
+</script>
+
 
 </body>
 </html>
