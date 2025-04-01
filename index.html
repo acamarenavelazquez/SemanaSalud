@@ -124,12 +124,16 @@
     }
 
     function formatDate(dateString) {
-      const date = new Date(dateString);
-      const day = date.getDate().toString().padStart(2, '0');
-      const month = (date.getMonth() + 1).toString().padStart(2, '0');
-      const year = date.getFullYear();
-      return `${day}/${month}/${year}`;
-    }
+  const date = new Date(dateString);
+  const day = date.getDate().toString().padStart(2, '0');
+  const monthNames = [
+    'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+  ];
+  const month = monthNames[date.getMonth()];
+  return `${day} ${month}`;
+}
+  
 
     function renderCards(data) {
       const container = document.getElementById('carouselContainer');
